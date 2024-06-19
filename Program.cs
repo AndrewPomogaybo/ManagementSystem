@@ -1,11 +1,6 @@
-﻿
-using ManagementSystem.Models;
-
+﻿using ManagementSystem.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
 
 
 
@@ -20,12 +15,22 @@ namespace ManagementSystem
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            List<User> _users = new List<User>();
+            List<User> _users = new List<User>
+            {
+                new User { User_id = 1, User_name = "Manager", User_surname = "Manager", User_login = "Manager", User_password = "Manager", User_role = 1 },
+                new User { User_id = 2, User_name = "Worker", User_surname = "Worker", User_login = "Worker", User_password = "Worker", User_role = 2 }
+            };
 
-            _users = GenerateData.WriteData(_users);
-            UserLoader _userLoader = new UserLoader("users.json");
-            _userLoader.SaveUserToJson(_users);
+            List<Role> _roles = new List<Role>
+            {
+                new Role { Role_id = 1, Role_name = "Manager" },
+                new Role { Role_id = 2, Role_name = "Worker" }
+            };
 
+            JsonFileHandler.SaveToJson("users.json", _users);
+            JsonFileHandler.SaveToJson("roles.json", _roles);
+
+        _auth:
             Console.WriteLine("Добро пожаловать!");
             Console.WriteLine("");
             Console.WriteLine("Авторизация");
@@ -35,36 +40,42 @@ namespace ManagementSystem
             Console.WriteLine("Пароль:");
             _password = Console.ReadLine();
 
-
-            if(Auntification.IsCorrectAuth(_login, _password, _users) != null)
+            if (Authentification.AuthenticateUser(_login,_password,_users,_roles))
             {
-                Console.WriteLine($"Добро пожаловать {Auntification.IsCorrectAuth(_login, _password, _users).User_name}");
-                Console.WriteLine("");
-                string _role = Auntification.GetRole(Auntification.IsCorrectAuth(_login, _password, _users).User_id, _users)[0]?.Role_name;
+                string _role = Authentification.GetRole(_login, _password, _users, _roles);
 
                 switch (_role)
                 {
-                    case "manager":
-                        Console.WriteLine("Вход выполнен как управляющий");
+                    case "Manager":
+                        Console.WriteLine("Вы вошли как управляющий");
+                        Console.WriteLine("Меню:" + "" +
+                            "\n 1-Просмотр БД" + "\n 2-Добавить задачу" + "\n 3-Добавить сотрудника \n 4-Выход");
 
-                        Console.WriteLine("Меню:" +
-                            "\n1-Посмотреть Базу"+"" +
-                            "\n2-Назначить задачу"+
-                            "\n3-Добавить сотрудника");
                         _option = Convert.ToInt32(Console.ReadLine());
 
-                        OptionsController.ShowOption(_option, _users);
-
+                        switch (_option)
+                        {
+                            case 1:
+                               DataDisplay.Display();
+                               break;
+                            case 4:
+                               goto _auth;      
+                        }
                         break;
-                    case "worker":
-                        Console.WriteLine("Вход выполнен как работник");
 
-                        Console.WriteLine("Меню:" +
-                            "\n1-Посмотреть задачи");
+                    case "Worker":
+                        Console.WriteLine("Вы вошли как работник");
+                        Console.WriteLine("Меню:" + "\n 1-Просмотр задач \n 2-Выход");
                         break;
-
                 }
             }
+            else
+            {
+                Console.WriteLine("Логин или пароль введен неверно!");
+                goto _auth;
+            }
+            
+            
             Console.ReadKey();
         }
     }

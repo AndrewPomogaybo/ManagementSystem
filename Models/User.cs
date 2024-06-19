@@ -9,13 +9,12 @@ namespace ManagementSystem
 {
     public class User
     {
-        public int User_id { get; set; }
-        public string User_name { get; set; }
-        public string User_surname { get; set; }
-        public string User_login { get; set; }
-        public string User_password { get; set;}
-
-        public List<Role> Roles { get; set; } = new List<Role>();
+        public int User_id { get; set; } = 1;
+        public string User_name { get; set; } = "Manager";
+        public string User_surname { get; set; } = "Manager";
+        public string User_login { get; set; } = "Manager";
+        public string User_password { get; set; } = "Manager";
+        public int User_role { get; set; } = 1;
 
     }
 }
