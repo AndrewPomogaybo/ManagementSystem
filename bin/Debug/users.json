@@ -1,0 +1,32 @@
+[
+  {
+    "User_id": 2,
+    "User_name": "Manager",
+    "User_surname": "Manager",
+    "User_login": "Manager",
+    "User_password": "Manager",
+    "Roles": [
+      {
+        "Role_id": 1,
+        "Role_name": "manager"
+      },
+      {
+        "Role_id": 2,
+        "Role_name": "worker"
+      }
+    ]
+  },
+  {
+    "User_id": 1,
+    "User_name": "Worker",
+    "User_surname": "Worker",
+    "User_login": "Worker",
+    "User_password": "Worker",
+    "Roles": [
+      {
+        "Role_id": 2,
+        "Role_name": "worker"
+      }
+    ]
+  }
+]
