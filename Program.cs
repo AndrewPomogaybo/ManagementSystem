@@ -1,6 +1,7 @@
 ﻿using ManagementSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 
 
@@ -48,6 +49,8 @@ namespace ManagementSystem
                 {
                     case "Manager":
                         Console.WriteLine("Вы вошли как управляющий");
+                        Console.WriteLine("");
+                    _opt:
                         Console.WriteLine("Меню:" + "" +
                             "\n 1-Просмотр БД" + "\n 2-Добавить задачу" + "\n 3-Добавить сотрудника \n 4-Выход");
 
@@ -57,7 +60,31 @@ namespace ManagementSystem
                         {
                             case 1:
                                DataDisplay.Display();
-                               break;
+                               goto _opt;
+                            case 3:
+                                Console.WriteLine("Введите имя:");
+                                string _userName = Console.ReadLine();
+                                Console.WriteLine("Введите фамилию:");
+                                string _userSurname = Console.ReadLine();
+                                Console.WriteLine("Введите логин:");
+                                string _userLogin = Console.ReadLine();
+                                Console.WriteLine("Введите пароль:");
+                                string _userPassword = Console.ReadLine();
+                                Console.WriteLine("Выберите роль (1-Работник, 2-Работник)");
+                                int _userRole = Convert.ToInt32(Console.ReadLine());
+
+                                AddData.AddUser("users.json", _roles, _userName, _userSurname, _userLogin, _userPassword, _userRole);
+                                Console.WriteLine("Успешно");
+                                goto _opt;
+                            case 2:
+                                Console.WriteLine("Назовите задачи");
+                                string _taskName = Console.ReadLine();
+                                Console.WriteLine("Опишите задачу");
+                                string _taskDescription = Console.ReadLine();
+                                Console.WriteLine("Назначьте пользователя (Введите идентификатор)");
+                                DataDisplay.DisplayUsers();
+                                int _taskUser = Convert.ToInt32(Console.ReadLine());
+                                break;
                             case 4:
                                goto _auth;      
                         }
@@ -66,6 +93,18 @@ namespace ManagementSystem
                     case "Worker":
                         Console.WriteLine("Вы вошли как работник");
                         Console.WriteLine("Меню:" + "\n 1-Просмотр задач \n 2-Выход");
+
+                        _option = Convert.ToInt32(Console.ReadLine());
+
+                        switch (_option) 
+                        {
+                            case 1:
+                                goto _auth;
+                            case 2:
+                                break;
+                        }
+
+
                         break;
                 }
             }
