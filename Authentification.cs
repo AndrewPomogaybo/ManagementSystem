@@ -26,5 +26,11 @@ namespace ManagementSystem
             var role = roles.FirstOrDefault(r => r.Role_id == user.User_role);
             return role != null ? $"{role.Role_name}" : "Роль не найдена";
         }
+
+        public static int GetId(string login, string password, List<User> users)
+        {
+            var user = users.FirstOrDefault(u => u.User_login == login && u.User_password == password);
+            return user.User_id;
+        }
     }
 }

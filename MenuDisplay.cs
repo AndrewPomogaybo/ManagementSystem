@@ -1,9 +1,6 @@
 ﻿using ManagementSystem.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManagementSystem
 {
@@ -15,7 +12,7 @@ namespace ManagementSystem
             Console.WriteLine("Вы вошли как управляющий");
             while (true)
             {
-                option = Input.GetOptionInput(option);
+                option = Input.GetManagerOptionInput(option);
 
                 switch (option)
                 {
@@ -51,9 +48,32 @@ namespace ManagementSystem
                         Console.WriteLine("Успешно");
                         break;
                     case 4:
-                        continue;
+                        return;
                 }
             }
         } 
+
+
+
+        public static void WorkerMenu(int option, int id)
+        {
+            Console.WriteLine("Вы вошли как работник");
+
+            while (true)
+            {
+                option = Input.GetWorkerOptionInput(option);
+
+                switch (option)
+                {
+                    case 1:
+                        DataDisplay.DisplayTasks(id);
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        return;
+                }
+            }
+        }
     }
 }

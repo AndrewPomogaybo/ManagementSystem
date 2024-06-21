@@ -18,7 +18,8 @@ namespace ManagementSystem
             Console.WriteLine("Пользователи:");
             foreach (var user in _readUsers)
             {
-                Console.WriteLine($"ID: {user.User_id}, Имя: {user.User_name}, Фамилия: {user.User_surname}, Логин: {user.User_login}, Роль: {user.User_role}");
+                var roleName = _readRoles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Unknown";
+                Console.WriteLine($"ID: {user.User_id}, Имя: {user.User_name}, Фамилия: {user.User_surname}, Логин: {user.User_login}, Роль: {roleName}");
             }
 
             Console.WriteLine("\nРоли:");
@@ -36,7 +37,11 @@ namespace ManagementSystem
             Console.WriteLine("\nЗадачи:");
             foreach (var task in _readTasks)
             {
-                Console.WriteLine($"ID: {task.Task_id}, Название: {task.Task_name}, Описание: {task.Task_description}, Назначенный пользователь: {task.Task_user}, Статус: {task.Task_status}");
+                string _userName = _readUsers.FirstOrDefault(u => u.User_id == task.Task_user)?.User_name ?? "Пользователь не найден";
+                string _statusName = _readStatuses.FirstOrDefault(s => s.Status_id == task.Task_status)?.Status_name ?? "Статус не найден";
+                string _userSurname = _readUsers.FirstOrDefault(u => u.User_id == task.Task_user)?.User_surname ?? "Пользователь не найден";
+
+                Console.WriteLine($"ID: {task.Task_id}, Название: {task.Task_name}, Описание: {task.Task_description}, Назначенный пользователь: {_userName} {_userSurname}, Статус: {_statusName}");
             }
         }
 
@@ -50,8 +55,37 @@ namespace ManagementSystem
             Console.WriteLine("Пользователи:");
             foreach (var user in _filteredUsers)
             {
-                string roleName = _roles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Не найдено";
-                Console.WriteLine($"ID: {user.User_id}, Имя: {user.User_name}, Фамилия: {user.User_surname}, Логин: {user.User_login}, Роль: {roleName}");
+                string _roleName = _roles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Не найдено";
+                Console.WriteLine($"ID: {user.User_id}, Имя: {user.User_name}, Фамилия: {user.User_surname}, Логин: {user.User_login}, Роль: {_roleName}");
+            }
+        }
+
+        public static void DisplayTasks(int id)
+        {
+            List<User> _readUsers = JsonFileHandler.ReadFromJson<List<User>>("users.json");
+            List<Role> _readRoles = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
+            List<Status> _readStatuses = JsonFileHandler.ReadFromJson<List<Status>>("statuses.json");
+            List<Task> _readTasks = JsonFileHandler.ReadFromJson<List<Task>>("tasks.json");
+
+            var _currentUser = _readUsers.FirstOrDefault(u => u.User_id == id);
+
+            if (_currentUser == null)
+            {
+                Console.WriteLine("Пользователь не найден");
+                return;
+            }
+
+            var _userTasks = _readTasks.Where(t => t.Task_user == id).ToList();
+
+
+
+            if (_userTasks.Any())
+            {
+                foreach (var task in _userTasks)
+                {
+                    var _statusName = _readStatuses.FirstOrDefault(s => s.Status_id == task.Task_status)?.Status_name ?? "Статус не найден";
+                    Console.WriteLine($"Задача: Название задачи: {task.Task_name}, Описание задачи: {task.Task_description}, Статус задачи: {_statusName}");
+                }
             }
         }
     }

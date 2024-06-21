@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManagementSystem
 {
@@ -14,11 +10,17 @@ namespace ManagementSystem
             return login = Console.ReadLine();
         }
 
-        public static int GetOptionInput(int option)
+        public static int GetManagerOptionInput(int option)
         {
             Console.WriteLine("Меню:" + "" +
                                 "\n 1-Просмотр БД" + "\n 2-Добавить задачу" + "\n 3-Добавить сотрудника \n 4-Выход");
 
+            return option = Convert.ToInt32(Console.ReadLine());
+        }
+
+        public static int GetWorkerOptionInput(int option)
+        {
+            Console.WriteLine("Меню:" + "\n 1-Просмотр задач \n 2-Обновить статус задачи \n 3-Выход");
             return option = Convert.ToInt32(Console.ReadLine());
         }
 

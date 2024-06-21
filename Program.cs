@@ -53,7 +53,7 @@ namespace ManagementSystem
                                 MenuDisplay.ManagerMenu(_option, _roles);
                                 break;
                             case "Worker":
-                                Console.WriteLine("Вы вошли как работник");
+                                MenuDisplay.WorkerMenu(_option, Authentification.GetId(_login, _password, _users));
                                 break;
                         }
                     }
