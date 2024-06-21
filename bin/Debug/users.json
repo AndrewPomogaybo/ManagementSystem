@@ -14,5 +14,29 @@
     "User_login": "Worker",
     "User_password": "Worker",
     "User_role": 2
+  },
+  {
+    "User_id": 3,
+    "User_name": "Андрей",
+    "User_surname": "Помогайбо",
+    "User_login": "qwerty",
+    "User_password": "qwerty",
+    "User_role": 2
+  },
+  {
+    "User_id": 4,
+    "User_name": "Виктор",
+    "User_surname": "Майоров",
+    "User_login": "pom",
+    "User_password": "pom",
+    "User_role": 2
+  },
+  {
+    "User_id": 5,
+    "User_name": "Василий",
+    "User_surname": "Пупкин",
+    "User_login": "pup",
+    "User_password": "pup",
+    "User_role": 2
   }
 ]

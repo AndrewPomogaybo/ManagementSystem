@@ -12,8 +12,9 @@ namespace ManagementSystem
         {
             List<User> _readUsers = JsonFileHandler.ReadFromJson<List<User>>("users.json");
             List<Role> _readRoles = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
+            List<Status> _readStatuses = JsonFileHandler.ReadFromJson<List<Status>>("statuses.json");
+            List<Task> _readTasks = JsonFileHandler.ReadFromJson<List<Task>>("tasks.json");
 
-            // Вывод данных
             Console.WriteLine("Пользователи:");
             foreach (var user in _readUsers)
             {
@@ -24,6 +25,18 @@ namespace ManagementSystem
             foreach (var role in _readRoles)
             {
                 Console.WriteLine($"ID: {role.Role_id}, Название: {role.Role_name}");
+            }
+
+            Console.WriteLine("\nСтатусы:");
+            foreach (var status in _readStatuses)
+            {
+                Console.WriteLine($"ID: {status.Status_id}, Название: {status.Status_name}");
+            }
+
+            Console.WriteLine("\nЗадачи:");
+            foreach (var task in _readTasks)
+            {
+                Console.WriteLine($"ID: {task.Task_id}, Название: {task.Task_name}, Описание: {task.Task_description}, Назначенный пользователь: {task.Task_user}, Статус: {task.Task_status}");
             }
         }
 

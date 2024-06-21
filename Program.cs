@@ -1,6 +1,7 @@
 ﻿using ManagementSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 
 
@@ -12,110 +13,77 @@ namespace ManagementSystem
         private static string _login;
         private static string _password;
         private static int _option;
+
+        private static List<User> _users;
+        private static List<Role> _roles;
+        private static List<Status> _statuses;
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            List<User> _users = new List<User>
-            {
-                new User { User_id = 1, User_name = "Manager", User_surname = "Manager", User_login = "Manager", User_password = "Manager", User_role = 1 },
-                new User { User_id = 2, User_name = "Worker", User_surname = "Worker", User_login = "Worker", User_password = "Worker", User_role = 2 }
-            };
+            _users = FillData.FillUsers();
+            _roles = FillData.FillRoles();
+            _statuses = FillData.FillStatus();
 
-            List<Role> _roles = new List<Role>
-            {
-                new Role { Role_id = 1, Role_name = "Manager" },
-                new Role { Role_id = 2, Role_name = "Worker" }
-            };
+            if (File.Exists("users.json"))
+                _users = JsonFileHandler.ReadFromJson<List<User>>("users.json");
+
+            if (File.Exists("roles.json"))
+                _roles = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
+
+            if (File.Exists("statuses.json"))
+                _statuses = JsonFileHandler.ReadFromJson<List<Status>>("statuses.json");
 
             JsonFileHandler.SaveToJson("users.json", _users);
             JsonFileHandler.SaveToJson("roles.json", _roles);
+            JsonFileHandler.SaveToJson("statuses.json", _statuses);
 
-        _auth:
-            Console.WriteLine("Добро пожаловать!");
-            Console.WriteLine("");
-            Console.WriteLine("Авторизация");
-            Console.WriteLine("");
-            Console.WriteLine("Логин:");
-            _login = Console.ReadLine();
-            Console.WriteLine("Пароль:");
-            _password = Console.ReadLine();
-
-            if (Authentification.AuthenticateUser(_login,_password,_users,_roles))
+            try
             {
-                string _role = Authentification.GetRole(_login, _password, _users, _roles);
-
-                switch (_role)
+                while (true)
                 {
-                    case "Manager":
-                        Console.WriteLine("Вы вошли как управляющий");
-                        Console.WriteLine("");
-                    _opt:
-                        Console.WriteLine("Меню:" + "" +
-                            "\n 1-Просмотр БД" + "\n 2-Добавить задачу" + "\n 3-Добавить сотрудника \n 4-Выход");
+                    if (Login(_users, _roles))
+                    {
+                        
+                        string _role = Authentification.GetRole(_login, _password, _users, _roles);
 
-                        _option = Convert.ToInt32(Console.ReadLine());
-
-                        switch (_option)
+                        switch (_role)
                         {
-                            case 1:
-                               DataDisplay.Display();
-                               goto _opt;
-                            case 3:
-                                Console.WriteLine("Введите имя:");
-                                string _userName = Console.ReadLine();
-                                Console.WriteLine("Введите фамилию:");
-                                string _userSurname = Console.ReadLine();
-                                Console.WriteLine("Введите логин:");
-                                string _userLogin = Console.ReadLine();
-                                Console.WriteLine("Введите пароль:");
-                                string _userPassword = Console.ReadLine();
-                                Console.WriteLine("Выберите роль (1-Работник, 2-Работник)");
-                                int _userRole = Convert.ToInt32(Console.ReadLine());
-
-                                AddData.AddUser("users.json", _roles, _userName, _userSurname, _userLogin, _userPassword, _userRole);
-                                Console.WriteLine("Успешно");
-                                goto _opt;
-                            case 2:
-                                Console.WriteLine("Назовите задачи");
-                                string _taskName = Console.ReadLine();
-                                Console.WriteLine("Опишите задачу");
-                                string _taskDescription = Console.ReadLine();
-                                Console.WriteLine("Назначьте пользователя (Введите идентификатор)");
-                                DataDisplay.DisplayUsers();
-                                int _taskUser = Convert.ToInt32(Console.ReadLine());
+                            case "Manager":
+                                MenuDisplay.ManagerMenu(_option, _roles);
                                 break;
-                            case 4:
-                               goto _auth;      
-                        }
-                        break;
-
-                    case "Worker":
-                        Console.WriteLine("Вы вошли как работник");
-                        Console.WriteLine("Меню:" + "\n 1-Просмотр задач \n 2-Выход");
-
-                        _option = Convert.ToInt32(Console.ReadLine());
-
-                        switch (_option) 
-                        {
-                            case 1:
-                                goto _auth;
-                            case 2:
+                            case "Worker":
+                                Console.WriteLine("Вы вошли как работник");
                                 break;
                         }
-
-
-                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Неверный логин или пароль! Попробуйте снова");
+                    }
+                    
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Логин или пароль введен неверно!");
-                goto _auth;
+                Console.WriteLine(ex.Message);
             }
             
-            
             Console.ReadKey();
+        }
+
+
+
+        private static bool Login(List<User> users, List<Role> roles)
+        {
+            Console.WriteLine("Добро пожаловать!");
+            Console.WriteLine("\nАвторизация\n");//Я подготовил двух пользователей
+                                                 //Введите Manager Manager чтобы войти под управляющим
+                                                 //Введите Worker Worker чтобы войти под работником
+            _login = Input.GetLoginInput(_login);
+            _password = Input.GetPasswordInput(_password);
+
+            return Authentification.AuthenticateUser(_login, _password, users, roles);
         }
     }
 }

@@ -12,5 +12,6 @@ namespace ManagementSystem.Models
         public string Task_name {  get; set; }
         public string Task_description { get; set;}
         public int Task_user {  get; set; }
+        public int Task_status { get; set;}
     }
 }

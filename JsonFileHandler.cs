@@ -18,7 +18,5 @@ namespace ManagementSystem
             string _json = File.ReadAllText(path);
             return JsonConvert.DeserializeObject<T>(_json);
         }
-
-        
     }
 }
