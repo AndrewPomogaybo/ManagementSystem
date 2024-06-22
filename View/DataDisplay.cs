@@ -8,13 +8,12 @@ namespace ManagementSystem
 {
     public class DataDisplay
     {
+        private static List<User> _readUsers = JsonFileHandler.ReadFromJson<List<User>>("users.json");
+        private static List<Role> _readRoles = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
+        private static List<Status> _readStatuses = JsonFileHandler.ReadFromJson<List<Status>>("statuses.json");
+        private static List<Task> _readTasks = JsonFileHandler.ReadFromJson<List<Task>>("tasks.json");
         public static void Display() 
         {
-            List<User> _readUsers = JsonFileHandler.ReadFromJson<List<User>>("users.json");
-            List<Role> _readRoles = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
-            List<Status> _readStatuses = JsonFileHandler.ReadFromJson<List<Status>>("statuses.json");
-            List<Task> _readTasks = JsonFileHandler.ReadFromJson<List<Task>>("tasks.json");
-
             Console.WriteLine("Пользователи:");
             foreach (var user in _readUsers)
             {
@@ -45,28 +44,20 @@ namespace ManagementSystem
             }
         }
 
-        public static void DisplayUsers()
+        public static void DisplayUsers(bool hidePwd = false)
         {
-            List<User> _readUsers = JsonFileHandler.ReadFromJson<List<User>>("users.json");
-            List<Role> _roles = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
-
             var _filteredUsers = _readUsers.Where(user => user.User_role == 2).ToList();
 
             Console.WriteLine("Пользователи:");
             foreach (var user in _filteredUsers)
             {
-                string _roleName = _roles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Не найдено";
+                string _roleName = _readRoles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Не найдено";
                 Console.WriteLine($"ID: {user.User_id}, Имя: {user.User_name}, Фамилия: {user.User_surname}, Логин: {user.User_login}, Роль: {_roleName}");
             }
         }
 
         public static void DisplayTasks(int id)
         {
-            List<User> _readUsers = JsonFileHandler.ReadFromJson<List<User>>("users.json");
-            List<Role> _readRoles = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
-            List<Status> _readStatuses = JsonFileHandler.ReadFromJson<List<Status>>("statuses.json");
-            List<Task> _readTasks = JsonFileHandler.ReadFromJson<List<Task>>("tasks.json");
-
             var _currentUser = _readUsers.FirstOrDefault(u => u.User_id == id);
 
             if (_currentUser == null)
@@ -76,8 +67,6 @@ namespace ManagementSystem
             }
 
             var _userTasks = _readTasks.Where(t => t.Task_user == id).ToList();
-
-
 
             if (_userTasks.Any())
             {
