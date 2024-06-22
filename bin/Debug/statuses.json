@@ -4,11 +4,11 @@
     "Status_name": "To do"
   },
   {
-    "Status_id": 1,
+    "Status_id": 2,
     "Status_name": "In Progress"
   },
   {
-    "Status_id": 1,
+    "Status_id": 3,
     "Status_name": "Done"
   }
 ]

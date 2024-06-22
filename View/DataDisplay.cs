@@ -84,7 +84,7 @@ namespace ManagementSystem
                 foreach (var task in _userTasks)
                 {
                     var _statusName = _readStatuses.FirstOrDefault(s => s.Status_id == task.Task_status)?.Status_name ?? "Статус не найден";
-                    Console.WriteLine($"Задача: Название задачи: {task.Task_name}, Описание задачи: {task.Task_description}, Статус задачи: {_statusName}");
+                    Console.WriteLine($"Задача:  ID: {task.Task_id} Название задачи: {task.Task_name}, Описание задачи: {task.Task_description}, Статус задачи: {_statusName}");
                 }
             }
         }

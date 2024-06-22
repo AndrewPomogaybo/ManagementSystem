@@ -1,17 +1,13 @@
 ﻿using ManagementSystem.Models;
+using ManagementSystem.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
-
-
 
 namespace ManagementSystem
 {
     internal class Program
     {
-        private static string _login;
-        private static string _password;
         private static int _option;
 
         private static List<User> _users;
@@ -20,10 +16,6 @@ namespace ManagementSystem
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-
-            _users = FillData.FillUsers();
-            _roles = FillData.FillRoles();
-            _statuses = FillData.FillStatus();
 
             if (File.Exists("users.json"))
                 _users = JsonFileHandler.ReadFromJson<List<User>>("users.json");
@@ -40,12 +32,13 @@ namespace ManagementSystem
 
             try
             {
+                Console.WriteLine("Добро пожаловать!");
+                Console.WriteLine("\nАвторизация\n");
                 while (true)
                 {
-                    if (Login(_users, _roles))
+                    if (AuthDisplay.Login(_users, _roles))
                     {
-                        
-                        string _role = Authentification.GetRole(_login, _password, _users, _roles);
+                        string _role = AuthDisplay.GetRole();
 
                         switch (_role)
                         {
@@ -53,7 +46,7 @@ namespace ManagementSystem
                                 MenuDisplay.ManagerMenu(_option, _roles);
                                 break;
                             case "Worker":
-                                MenuDisplay.WorkerMenu(_option, Authentification.GetId(_login, _password, _users));
+                                MenuDisplay.WorkerMenu(_option, AuthDisplay.GetId());
                                 break;
                         }
                     }
@@ -61,7 +54,6 @@ namespace ManagementSystem
                     {
                         Console.WriteLine("Неверный логин или пароль! Попробуйте снова");
                     }
-                    
                 }
             }
             catch (Exception ex)
@@ -70,20 +62,6 @@ namespace ManagementSystem
             }
             
             Console.ReadKey();
-        }
-
-
-
-        private static bool Login(List<User> users, List<Role> roles)
-        {
-            Console.WriteLine("Добро пожаловать!");
-            Console.WriteLine("\nАвторизация\n");//Я подготовил двух пользователей
-                                                 //Введите Manager Manager чтобы войти под управляющим
-                                                 //Введите Worker Worker чтобы войти под работником
-            _login = Input.GetLoginInput(_login);
-            _password = Input.GetPasswordInput(_password);
-
-            return Authentification.AuthenticateUser(_login, _password, users, roles);
         }
     }
 }

@@ -69,6 +69,14 @@ namespace ManagementSystem
                         DataDisplay.DisplayTasks(id);
                         break;
                     case 2:
+                        Console.WriteLine("Выберите задачу (Введите id)");
+                        DataDisplay.DisplayTasks(id);
+                        int _id = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine("Выберите статус (2-In Progress, 3-Done)");
+                        int _status = Convert.ToInt32(Console.ReadLine());
+                        UpdateData.UpdateTask(_id, _status);
+                        Console.WriteLine("Успешно!");
                         break;
                     case 3:
                         return;

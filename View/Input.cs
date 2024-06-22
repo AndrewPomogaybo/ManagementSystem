@@ -4,10 +4,10 @@ namespace ManagementSystem
 {
     public class Input
     {
-        public static string GetLoginInput(string login)
+        public static string GetLoginInput()
         {
             Console.WriteLine("Логин:");
-            return login = Console.ReadLine();
+            return Console.ReadLine();
         }
 
         public static int GetManagerOptionInput(int option)
@@ -24,10 +24,10 @@ namespace ManagementSystem
             return option = Convert.ToInt32(Console.ReadLine());
         }
 
-        public static string GetPasswordInput(string pwd)
+        public static string GetPasswordInput()
         {
             Console.WriteLine("Пароль:");
-            return pwd = Console.ReadLine();
+            return Console.ReadLine();
         }
 
     }
