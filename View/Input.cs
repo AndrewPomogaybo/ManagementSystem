@@ -13,7 +13,7 @@ namespace ManagementSystem
         public static int GetManagerOptionInput(int option)
         {
             Console.WriteLine("Меню:" + "" +
-                                "\n 1-Просмотр БД" + "\n 2-Добавить задачу" + "\n 3-Добавить сотрудника \n 4-Выход");
+                                "\n 1-Просмотр БД" + "\n 2-Добавить задачу" + "\n 3-Добавить сотрудника \n 4-Просмотр логов \n 5-Выход");
 
             return option = Convert.ToInt32(Console.ReadLine());
         }

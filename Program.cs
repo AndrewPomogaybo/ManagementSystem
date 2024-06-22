@@ -39,6 +39,7 @@ namespace ManagementSystem
                     if (AuthDisplay.Login(_users, _roles))
                     {
                         string _role = AuthDisplay.GetRole();
+                        int _userId = AuthDisplay.GetId();
 
                         switch (_role)
                         {

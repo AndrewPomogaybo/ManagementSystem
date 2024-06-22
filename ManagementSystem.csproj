@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\AddData.cs" />
+    <Compile Include="Models\Log.cs" />
     <Compile Include="View\AuthDisplay.cs" />
     <Compile Include="View\DataDisplay.cs" />
     <Compile Include="Controller\FileValidator.cs" />

@@ -12,12 +12,13 @@ namespace ManagementSystem
         private static List<Role> _readRoles = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
         private static List<Status> _readStatuses = JsonFileHandler.ReadFromJson<List<Status>>("statuses.json");
         private static List<Task> _readTasks = JsonFileHandler.ReadFromJson<List<Task>>("tasks.json");
+        private static List<Log> _readLogs = JsonFileHandler.ReadFromJson<List<Log>>("logs.json");
         public static void Display() 
         {
             Console.WriteLine("Пользователи:");
             foreach (var user in _readUsers)
             {
-                var roleName = _readRoles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Unknown";
+                string roleName = _readRoles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Unknown";
                 Console.WriteLine($"ID: {user.User_id}, Имя: {user.User_name}, Фамилия: {user.User_surname}, Логин: {user.User_login}, Роль: {roleName}");
             }
 
@@ -75,6 +76,18 @@ namespace ManagementSystem
                     var _statusName = _readStatuses.FirstOrDefault(s => s.Status_id == task.Task_status)?.Status_name ?? "Статус не найден";
                     Console.WriteLine($"Задача:  ID: {task.Task_id} Название задачи: {task.Task_name}, Описание задачи: {task.Task_description}, Статус задачи: {_statusName}");
                 }
+            }
+        }
+
+
+        public static void DisplayLogs()
+        {
+            Console.WriteLine("Логи:");
+
+            foreach (var log in _readLogs)
+            {
+                string _userName = _readUsers.FirstOrDefault(u => u.User_id == log.Log_user)?.User_name ?? "Не найдено";
+                Console.WriteLine($" {log.Log_name}, Пользователь: {_userName}, Время: {log.Log_time}");
             }
         }
     }

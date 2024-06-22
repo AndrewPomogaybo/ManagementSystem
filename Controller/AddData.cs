@@ -51,5 +51,18 @@ namespace ManagementSystem
             JsonFileHandler.SaveToJson(path, dataList);
         }
 
+
+        public static void AddLog(string action, int userId)
+        {
+            Log _newLog = new Log();
+            List<Log> _log = JsonFileHandler.ReadFromJson<List<Log>>("logs.json");
+
+            _newLog.Log_id = Generate.GenerateId(_log, "Log_id");
+            _newLog.Log_name = action;
+            _newLog.Log_user = userId;
+            _newLog.Log_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            
+            AddToJson("logs.json", _newLog);
+        }
     }
 }

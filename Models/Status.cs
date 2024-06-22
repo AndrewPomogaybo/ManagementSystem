@@ -1,5 +1,4 @@
-﻿
-namespace ManagementSystem.Models
+﻿namespace ManagementSystem.Models
 {
     public class Status
     {

@@ -33,6 +33,7 @@ namespace ManagementSystem
                         int _userRole = Convert.ToInt32(Console.ReadLine());
 
                         AddData.AddUser("users.json", roles, _userName, _userSurname, _userLogin, _userPassword, _userRole);
+                        
                         Console.WriteLine("Успешно");
                         break;
                     case 2:
@@ -48,6 +49,9 @@ namespace ManagementSystem
                         Console.WriteLine("Успешно");
                         break;
                     case 4:
+                        DataDisplay.DisplayLogs();
+                        break;
+                    case 5:
                         return;
                 }
             }
