@@ -12,10 +12,10 @@ namespace ManagementSystem
             if(model == null || model.Count == 0)
                 return 1;
 
-            PropertyInfo idProperty = typeof(T).GetProperties()
+            PropertyInfo _idProperty = typeof(T).GetProperties()
                                                .FirstOrDefault(p => p.Name.Equals("Id", StringComparison.OrdinalIgnoreCase) || p.Name.Equals(id, StringComparison.OrdinalIgnoreCase));
 
-            return model.Max(item => (int)idProperty.GetValue(item)) + 1;
+            return model.Max(item => (int)_idProperty.GetValue(item)) + 1;
         }
     }
 }

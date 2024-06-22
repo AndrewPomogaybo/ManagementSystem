@@ -13,6 +13,7 @@ namespace ManagementSystem
         private static List<User> _users;
         private static List<Role> _roles;
         private static List<Status> _statuses;
+        private static List<Log> _logs;
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -26,13 +27,17 @@ namespace ManagementSystem
             if (File.Exists("statuses.json"))
                 _statuses = JsonFileHandler.ReadFromJson<List<Status>>("statuses.json");
 
+            if (File.Exists("logs.json"))
+                _logs = JsonFileHandler.ReadFromJson<List<Log>>("logs.json");
+
+            JsonFileHandler.SaveToJson("logs.json", _logs);
             JsonFileHandler.SaveToJson("users.json", _users);
             JsonFileHandler.SaveToJson("roles.json", _roles);
             JsonFileHandler.SaveToJson("statuses.json", _statuses);
 
             try
             {
-                Console.WriteLine("Добро пожаловать!");
+                Console.WriteLine("_________________________________________________ДОБРО ПОЖАЛОВАТЬ!___________________________________________");
                 Console.WriteLine("\nАвторизация\n");
                 while (true)
                 {

@@ -10,7 +10,6 @@ namespace ManagementSystem
     {
         public static void AddUser(string userPath, List<Role> roles, string name, string surname, string login, string pwd, int role)
         {
-            Console.OutputEncoding = System.Text.Encoding.UTF8;
             User _newUser = new User();
             List<User> _users = JsonFileHandler.ReadFromJson<List<User>>(userPath);
             _newUser.User_id = Generate.GenerateId(_users, "User_id");
@@ -21,7 +20,6 @@ namespace ManagementSystem
             _newUser.User_role = role;
 
             AddToJson(userPath, _newUser);
-            
         }
 
         public static void AddTask(string taskPath, string name, string description, int user)
@@ -40,15 +38,15 @@ namespace ManagementSystem
 
         public static void AddToJson<T>(string path, T newData)
         {
-            List<T> dataList;
+            List<T> _dataList;
 
             if (File.Exists(path))
-                dataList = JsonFileHandler.ReadFromJson<List<T>>(path);
+                _dataList = JsonFileHandler.ReadFromJson<List<T>>(path);
             else
-                dataList = new List<T>();
+                _dataList = new List<T>();
 
-            dataList.Add(newData);
-            JsonFileHandler.SaveToJson(path, dataList);
+            _dataList.Add(newData);
+            JsonFileHandler.SaveToJson(path, _dataList);
         }
 
 

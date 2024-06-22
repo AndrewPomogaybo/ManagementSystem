@@ -14,14 +14,14 @@ namespace ManagementSystem.View
             string _login = Input.GetLoginInput();
             string _password = Input.GetPasswordInput();
 
-            var user = JsonFileHandler.ReadFromJson<List<User>>("users.json");
-            var role = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
+            var _user = JsonFileHandler.ReadFromJson<List<User>>("users.json");
+            var _role = JsonFileHandler.ReadFromJson<List<Role>>("roles.json");
 
-            _currentUser = user.FirstOrDefault(u => u.User_login == _login && u.User_password == _password);
+            _currentUser = _user.FirstOrDefault(u => u.User_login == _login && u.User_password == _password);
 
             if(_currentUser != null)
             {
-                _currentRole = role.FirstOrDefault(r => r.Role_id == _currentUser.User_role);
+                _currentRole = _role.FirstOrDefault(r => r.Role_id == _currentUser.User_role);
                 return true;
             }
 

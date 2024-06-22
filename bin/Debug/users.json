@@ -38,5 +38,13 @@
     "User_login": "pup",
     "User_password": "pup",
     "User_role": 2
+  },
+  {
+    "User_id": 6,
+    "User_name": "Andrew",
+    "User_surname": "Pom",
+    "User_login": "log",
+    "User_password": "log",
+    "User_role": 2
   }
 ]

@@ -10,5 +10,17 @@
     "Log_name": "ID задачи:3, Статус изменен на In Progress ",
     "Log_time": "2024-06-22 14:29:07",
     "Log_user": 3
+  },
+  {
+    "Log_id": 3,
+    "Log_name": "ID задачи:3, Статус изменен на Done ",
+    "Log_time": "2024-06-22 16:37:40",
+    "Log_user": 3
+  },
+  {
+    "Log_id": 4,
+    "Log_name": "ID задачи:3, Статус изменен на In Progress ",
+    "Log_time": "2024-06-22 16:45:53",
+    "Log_user": 3
   }
 ]

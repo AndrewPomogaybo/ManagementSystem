@@ -18,8 +18,8 @@ namespace ManagementSystem
             Console.WriteLine("Пользователи:");
             foreach (var user in _readUsers)
             {
-                string roleName = _readRoles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Unknown";
-                Console.WriteLine($"ID: {user.User_id}, Имя: {user.User_name}, Фамилия: {user.User_surname}, Логин: {user.User_login}, Роль: {roleName}");
+                string _roleName = _readRoles.FirstOrDefault(r => r.Role_id == user.User_role)?.Role_name ?? "Unknown";
+                Console.WriteLine($"ID: {user.User_id}, Имя: {user.User_name}, Фамилия: {user.User_surname}, Логин: {user.User_login}, Роль: {_roleName}");
             }
 
             Console.WriteLine("\nРоли:");
@@ -82,9 +82,10 @@ namespace ManagementSystem
 
         public static void DisplayLogs()
         {
+            List<Log> _logs = JsonFileHandler.ReadFromJson<List<Log>>("logs.json");
             Console.WriteLine("Логи:");
 
-            foreach (var log in _readLogs)
+            foreach (var log in _logs)
             {
                 string _userName = _readUsers.FirstOrDefault(u => u.User_id == log.Log_user)?.User_name ?? "Не найдено";
                 Console.WriteLine($" {log.Log_name}, Пользователь: {_userName}, Время: {log.Log_time}");
